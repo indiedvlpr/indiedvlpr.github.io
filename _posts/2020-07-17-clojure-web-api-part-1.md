@@ -68,7 +68,7 @@ Since the Clojure community adheres pretty closely to the singular responsibilit
 ### [Component - Lifecycle Management](https://github.com/stuartsierra/component)
 This library allows us to manage some lifecycles that you will want in your application. The one we will want to use is when the application boots up, we want to create an HTTP server and when the HTTP server is created, we want to create a connection to our database. 
 
-### [PostgreSQL](https://www.postgresql.org/), [JDBC Connection](https://github.com/seancorfield/next-jdbc), & [Honey SQL - SQL](https://github.com/seancorfield/honeysql)
+### [PostgreSQL](https://www.postgresql.org/), [JDBC Connection](https://github.com/seancorfield/next-jdbc), & [Honey SQL](https://github.com/seancorfield/honeysql)
 For this project you will be using PostgreSQL. Follow the link above to get it install on your machine. 
 
 Honey SQL allows us to generate SQL queries without having to handroll all our queries into strings. It is a fantastic DSL. It will also make our code more readable.
