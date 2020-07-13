@@ -162,7 +162,11 @@ You will use the thread macro to start the component and create a system map. Th
 
 Now you should be able to get a server up and running! Head to your terminal and use the command `lein run 4000`. In your browser head to `localhost:4000`. You should see a message of "Hello Clojure, Hello Ring!" from your handler above. 
 
-So you know have an HTTP server up and running. Yahoo! Stay tuned as in the next part of this series you will hook up your HTTP server with some routes. 
+So you now have an HTTP server up and running. 
+
+Yahoo! 
+
+Stay tuned as in the next part of this series you will hook up your HTTP server with some routes. 
 
 There is a [GitHub repository](https://github.com/indiedvlpr/clojure-web-api-skeleton) that has this in a skeleton ready to go. 
 
