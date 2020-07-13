@@ -10,7 +10,7 @@ Disclaimer: I am new to Clojure.
 
 Now that everyone has read the disclaimer, some background on myself. 
 
-By trade I am a web developer. I primarily use Java, Spring Boot, Angular, and TypeScript. I was introduced to Clojure by a fellow teammate and I was instantly hooked. 
+By trade, I am a web developer. I primarily use Java, Spring Boot, Angular, and TypeScript. I was introduced to Clojure by a fellow teammate and I was instantly hooked. 
 
 Being a web developer I thought the best way to learn Clojure was to create an API server. Needless to say, it took **a lot** of scouring the internet, using the fantastic [Clojure Slack community](http://clojurians.net/), and lots of reading of dispersed blog posts to be able to glue all the pieces together. 
 
