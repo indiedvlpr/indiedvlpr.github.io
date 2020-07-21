@@ -16,9 +16,11 @@ Being a web developer I thought the best way to learn Clojure was to create an A
 
 I finally understood how to get an API server up and running but I also understood a lot of people's frustration when trying to get into Clojure. Specifically web development with Clojure. There is no "one-stop-shop, show me how". 
 
-So here we are. I am going to, hopefully, give all new Clojure peeps a resource in order to get an API server up and running with a database. We will be using Clojure (duh!), Leiningen, Compojure, Ring, Component, and HoneySQL. Don't worry if you do not know what all these things do, you will be the end of this blog post. 
+So here we are. I am going to, hopefully, give all new Clojure peeps a resource that will help them get an API server up and running with a database. 
 
-This will be a three-part series on creating an API server with routes and database interactivity. 
+You will be using: Clojure (duh!), Leiningen, Compojure, Ring, Component, and HoneySQL. Don't worry if you do not know what all these things do, you will be by the end of this blog post. 
+
+This is part of a three-part series on creating an API server with routes and database interactivity. 
 
 Grab a glass of water (or your favorite beverage), a comfy chair, and let's get to work. 
 
@@ -28,16 +30,16 @@ Grab a glass of water (or your favorite beverage), a comfy chair, and let's get 
 3. API Server in Clojure - Part 3
 
 ## JDK & Leiningen 
-Before we do anything we need to install a Java Development Kid (JDK). I prefer using [SDKMAN!](https://sdkman.io/) to manage my JDKs. 
+Before you do anything you need to install a Java Development Kid (JDK). I prefer using [SDKMAN!](https://sdkman.io/) to manage my JDKs. 
 
-After this, you will need to install Leiningen. Leiningen is an automation tool used for creating and managing Clojure projects. Instruction can be found on the [official Leiningen website](https://leiningen.org/). 
+After this, you will need to install Leiningen. Leiningen is an automation tool used for creating and managing Clojure projects. Instructions can be found on the [official Leiningen website](https://leiningen.org/). 
 
 ## Creating a Clojure application
-We will need to create our Clojure application using Leiningen. Change into the directory where you want your project to live and then run the following command
+You will need to create your Clojure application using Leiningen. Change into the directory where you want your project to live and then run the following command:
 ```
 lein new app your-app
 ```
-Leiningen will begin to perform work and create a base Clojure project for you to work in. Your project structure should look similar to this
+Leiningen will create a base Clojure project for you to work in. Your project structure should look similar to this
 ```
 your-app
 └─doc
@@ -54,27 +56,27 @@ your-app
 └─README.md
 ```
 
-Now that we have our application, let's install three dependencies we will need to get our API server up and running.
+Now that you have your application, let's install the dependencies you will need to get your API server up and running.
 
 ## Installing Dependencies
-There are several dependencies we will need to set up our API server for success. Below is a quick blurb for each and then instructions on where these dependencies go in our project.  
+There are several dependencies you will need to set up your API server for success. Below is a quick blurb for each and then instructions on where these dependencies go in your project.  
 
 ### [Ring - HTTP Server](https://github.com/ring-clojure/ring)
-The standard in the Clojure community is to use Ring for your HTTP server. It is a library with all the standard features we will need to get an HTTP server up and running. 
+A wildly used HTTP server library  is Ring. It is a library with all the standard features you will need to get an HTTP server up and running. 
 
-### [Compojure - Routing Library](https://github.com/weavejester/compojure)
-Since the Clojure community adheres pretty closely to the singular responsibility rule, the Ring library does not have any routing properties with it. Compojure will allow you to build out robust routes for your API server with all the standard RESTful methods like `POST`, `GET`, `PUT`, `PATCH`, and `DELETE`. 
+### [Compojure - Routing](https://github.com/weavejester/compojure)
+Compojure will allow you to build out robust routes for your API server with all the standard RESTful methods like `POST`, `GET`, `PUT`, `PATCH`, and `DELETE`. 
 
 ### [Component - Lifecycle Management](https://github.com/stuartsierra/component)
-This library allows us to manage some lifecycles that you will want in your application. The one we will want to use is when the application boots up, we want to create an HTTP server and when the HTTP server is created, we want to create a connection to our database. 
+This library allows us to manage some lifecycles that you will want in your application. The one you will want to use is when the application boots up, you want to create an HTTP server and when the HTTP server is created, you want to create a connection to our database. 
 
 ### [PostgreSQL](https://www.postgresql.org/), [JDBC Connection](https://github.com/seancorfield/next-jdbc), & [Honey SQL](https://github.com/seancorfield/honeysql)
 For this project you will be using PostgreSQL. Follow the link above to get it install on your machine. 
 
-Honey SQL allows us to generate SQL queries without having to handroll all our queries into strings. It is a fantastic DSL. It will also make our code more readable.
+Honey SQL helps you to generate SQL queries without having to handroll all your queries into strings. It is a fantastic DSL. It will also make our code more readable.
 
 
-To set our dependencies we will need to open the `project.clj` file and we need see a key called `:dependencies`. You will add the above dependencies in this list. In order to check what is the most up to date for each dependency, use the [Clojars website](https://clojars.org/). After adding the dependencies your list should look like
+To set dependencies you will need to open the `project.clj` file and you will see a key called `:dependencies`. This data structure is where you will add any dependencies you will need for your project.
 ```
 File: project.clj
 
@@ -88,7 +90,6 @@ File: project.clj
                   [org.postgresql/postgresql "42.2.10.jre7"]
                   [com.stuartsierra/component "0.4.0"]])
 ```
-Run `lein deps` to install these dependencies. 
 
 The first step you will need to complete is creating a component for the HTTP server. 
 
@@ -96,7 +97,7 @@ The first step you will need to complete is creating a component for the HTTP se
 
 Create a new directory called `system`. The path should be `src/your-app/system`. Within this directory create a new file called `server.clj`. In this file you will create the HTTP server component. 
 
-Crate a namespace for this Clojure file and you will need to import two additional namespaces from the dependencies you installed earlier. Those will be the jetty adapter that is bundled with Ring and the component namespace. Your namespace should look something like this
+Create a namespace for this Clojure file and you will need to import two additional namespaces from the dependencies you installed earlier. Those will be the jetty adapter that is bundled with Ring and the component namespace. Your namespace should look something like this
 ```
 File: system.clj
 
@@ -115,7 +116,7 @@ File: system.clj
   (let [server (jetty/run-jetty handler {:port (Integer. port)})]
     server))
 ```
-In this function, you are passing a port variable that the jetty server will run on. You might have noticed already that you will be getting an error on the keyword `handler`. The `jetty/run-jetty` requires a handler as its first argument. Ideally, in this argument, you would pass in a handler method for your routes. We will get to that in a bit but for now, let's create a function called `handler` that responds with a map full of mocked request data. It will look like this
+In this function, you are passing a port variable that the jetty server will run on. You might have noticed already that you will be getting an error on the keyword `handler`. The `jetty/run-jetty` requires a handler as its first argument. Ideally, in this argument, you would pass in a handler method for your routes. You will get to that in a bit but for now, let's create a function called `handler` that responds with a map full of mocked request data. It will look like this
 ```
 File: system.clj
 
@@ -151,7 +152,7 @@ File: system.clj
     (stop-server (:server this))
     (dissoc this :server)))
 ```
-This `defrecord` creates a component named `WebServer` that takes in a single argument that is the port number. As you can see, we have called the `start-server` helper function on the `start` function of the component's lifecycle, which is the running HTTP server. Identically we call the `stop-server` helper function on the `stop` function of the component's lifecycle. 
+This `defrecord` creates a component named `WebServer` that takes in a single argument that is the port number. As you can see, we have called the `start-server` helper function on the `start` function of the component's lifecycle, which is the running HTTP server. Identically you will call the `stop-server` helper function on the `stop` function of the component's lifecycle. 
 
 The final function you will need is a function that kicks off the component. 
 ```
@@ -164,7 +165,7 @@ File: system.clj
 ```
 This will be the function that you will call in the main method. Speaking of main method...let's create one!
 
-Navigate to `core.clj`. You can remove the `foo` function if you'd like. Now you will need to create a main method that calls the `web-server` function within our `system.server` namespace. You will need two namespaces in `core.clj`. The namespace of `system.server` as well as `component` from the dependency you installed earlier. Your namespace should look something like this
+Navigate to `core.clj`. You can remove the `foo` function if you'd like. Now you will need to create a main method that calls the `web-server` function within your `system.server` namespace. You will need two namespaces in `core.clj`. The namespace of `system.server` as well as `component` from the dependency you installed earlier. Your namespace should look something like this
 ```
 File: core.clj
 
@@ -187,7 +188,7 @@ So you now have an HTTP server up and running.
 
 Yahoo! 
 
-Stay tuned. In the next part of this series you will hook up your HTTP server with some routes. 
+Stay tuned. In the next part of this series, you will hook up your HTTP server with some routes. 
 
 There is a [GitHub repository](https://github.com/indiedvlpr/clojure-web-api-skeleton) that has this in a skeleton ready to go. 
 
