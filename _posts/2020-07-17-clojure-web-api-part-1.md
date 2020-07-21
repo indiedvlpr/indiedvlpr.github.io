@@ -76,6 +76,8 @@ Honey SQL allows us to generate SQL queries without having to handroll all our q
 
 To set our dependencies we will need to open the `project.clj` file and we need see a key called `:dependencies`. You will add the above dependencies in this list. In order to check what is the most up to date for each dependency, use the [Clojars website](https://clojars.org/). After adding the dependencies your list should look like
 ```
+File: project.clj
+
 (defproject your-app "0.1.0-SNAPSHOT
    ...
    :dependencies [[org.clojure/clojure "1.10.1]
