@@ -16,7 +16,7 @@ Being a web developer I thought the best way to learn Clojure was to create an A
 
 I finally understood how to get an API server up and running but I also understood a lot of people's frustration when trying to get into Clojure. Specifically web development with Clojure. There is no "one-stop-shop, show me how". 
 
-So here we are. I am going to, hopefully, give all new Clojure peeps a resource in order to get an API server up and running with a database. We will be using Clojure (duh!), Leiningen, Compojure, Ring, Component, and HoneySQL. Don't worry if you do not know what all these things do. You will be the end of this blog post. 
+So here we are. I am going to, hopefully, give all new Clojure peeps a resource in order to get an API server up and running with a database. We will be using Clojure (duh!), Leiningen, Compojure, Ring, Component, and HoneySQL. Don't worry if you do not know what all these things do, you will be the end of this blog post. 
 
 This will be a three-part series on creating an API server with routes and database interactivity. 
 
@@ -27,8 +27,8 @@ Grab a glass of water (or your favorite beverage), a comfy chair, and let's get 
 2. API Server in Clojure - Part 2
 3. API Server in Clojure - Part 3
 
-## Installing Clojure & Leiningen 
-Before we do anything we need to install Clojure. The most reliable instructions can be found on [the official Clojure website](https://clojure.org/guides/getting_started). Follow the instructions for whichever platform you are developing on. 
+## JDK & Leiningen 
+Before we do anything we need to install a Java Development Kid (JDK). I prefer using [SDKMAN!](https://sdkman.io/) to manage my JDKs. 
 
 After this, you will need to install Leiningen. Leiningen is an automation tool used for creating and managing Clojure projects. Instruction can be found on the [official Leiningen website](https://leiningen.org/). 
 
@@ -130,8 +130,9 @@ Now for the `stop-server` function
 ```
 File: system.clj
 
-(defn stop-server [server]
+(defn stop-server 
   "Helper function to stop the server when the component's stop function is called"
+  [server]
   (when server
     (dissoc server :server)))
 ```
@@ -147,7 +148,8 @@ File: system.clj
   (start [this]
     (assoc this :server (start-server port)))
   (stop [this]
-    (stop-server (:server this))))
+    (stop-server (:server this))
+    (dissoc this :server)))
 ```
 This `defrecord` creates a component named `WebServer` that takes in a single argument that is the port number. As you can see, we have called the `start-server` helper function on the `start` function of the component's lifecycle, which is the running HTTP server. Identically we call the `stop-server` helper function on the `stop` function of the component's lifecycle. 
 
@@ -155,8 +157,9 @@ The final function you will need is a function that kicks off the component.
 ```
 File: system.clj
 
-(defn web-server [port]
+(defn web-server 
   "Map web server to component"
+  [port]
   (map->WebServer {:port port}))
 ```
 This will be the function that you will call in the main method. Speaking of main method...let's create one!
