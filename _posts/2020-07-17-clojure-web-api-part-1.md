@@ -1,6 +1,6 @@
 ---
-title: "Setting up an API server using Clojure"
-published: false
+title: "API Server in Clojure - Part 1"
+published: true
 ---
 
 # API Server in Clojure - Part 1
@@ -96,6 +96,8 @@ Create a new directory called `system`. The path should be `src/your-app/system`
 
 Crate a namespace for this Clojure file and you will need to import two additional namespaces from the dependencies you installed earlier. Those will be the jetty adapter that is bundled with Ring and the component namespace. Your namespace should look something like this
 ```
+File: system.clj
+
 (ns your-app.system.server
   (:require [ring.adapter.jetty :as jetty]
             [com.stuartsierra.component :as component]))
@@ -104,6 +106,8 @@ Crate a namespace for this Clojure file and you will need to import two addition
 Now, let's create two functions: `start-server` and `stop-server`. These will be helper functions that your component will call in it's `start` and `stop` lifecycle functions. 
 
 ```
+File: system.clj
+
 (defn start-server [port]
   "Helper function to start the server when the component's start function is called"
   (let [server (jetty/run-jetty handler {:port (Integer. port)})]
@@ -111,6 +115,8 @@ Now, let's create two functions: `start-server` and `stop-server`. These will be
 ```
 In this function, you are passing a port variable that the jetty server will run on. You might have noticed already that you will be getting an error on the keyword `handler`. The `jetty/run-jetty` requires a handler as its first argument. Ideally, in this argument, you would pass in a handler method for your routes. We will get to that in a bit but for now, let's create a function called `handler` that responds with a map full of mocked request data. It will look like this
 ```
+File: system.clj
+
 (defn handler [request]
   {:status 200
    :headers {"Content-Type" "text/plain"}
@@ -120,6 +126,8 @@ The handler will expect an argument but in this temporary example you will not b
 
 Now for the `stop-server` function
 ```
+File: system.clj
+
 (defn stop-server [server]
   "Helper function to stop the server when the component's stop function is called"
   (when server
@@ -130,6 +138,8 @@ In this function, you will want to disassociate the server when the application 
 
 Component time. You will now create a component that will call these two helper functions. 
 ```
+File: system.clj
+
 (defrecord WebServer [port]
   component/Lifecycle
   (start [this]
@@ -141,6 +151,8 @@ This `defrecord` creates a component named `WebServer` that takes in a single ar
 
 The final function you will need is a function that kicks off the component. 
 ```
+File: system.clj
+
 (defn web-server [port]
   "Map web server to component"
   (map->WebServer {:port port}))
@@ -149,16 +161,20 @@ This will be the function that you will call in the main method. Speaking of mai
 
 Navigate to `core.clj`. You can remove the `foo` function if you'd like. Now you will need to create a main method that calls the `web-server` function within our `system.server` namespace. You will need two namespaces in `core.clj`. The namespace of `system.server` as well as `component` from the dependency you installed earlier. Your namespace should look something like this
 ```
+File: core.clj
+
 (ns you-app.core
   (:require [your-app.system.server :as server]
             [com.stuartsierra.component :as component]))
 ```
 You can now create a main method that will take in a single argument for the port number and then call the function that will kick off the web server component. The method should look something similar to 
 ```
+File: core.clj
+
  (defn -main [port]
   (-> (component/start (component/system-map :web-server (server/web-server port))))
 ```
-You will use the thread macro to start the component and create a system map. The system map is a key-value pair of all components that are active. More information can be found about these functions by looking at the repositories provided in the links above. 
+You will use the [thread macro](https://clojure.org/guides/threading_macros) to start the component and create a system map. The system map is a key-value pair of all components that are active. More information can be found about these functions by looking at the repositories provided in the links above. 
 
 Now you should be able to get a server up and running! Head to your terminal and use the command `lein run 4000`. In your browser head to `localhost:4000`. You should see a message of "Hello Clojure, Hello Ring!" from your handler above. 
 
@@ -173,5 +189,3 @@ There is a [GitHub repository](https://github.com/indiedvlpr/clojure-web-api-ske
 
 
 Always remember: Be kind. Be compassionate. Be positive. 
-
-
