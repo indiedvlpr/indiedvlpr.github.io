@@ -184,7 +184,7 @@ So you now have an HTTP server up and running.
 
 Yahoo! 
 
-Stay tuned as in the next part of this series you will hook up your HTTP server with some routes. 
+Stay tuned. In the next part of this series you will hook up your HTTP server with some routes. 
 
 There is a [GitHub repository](https://github.com/indiedvlpr/clojure-web-api-skeleton) that has this in a skeleton ready to go. 
 
