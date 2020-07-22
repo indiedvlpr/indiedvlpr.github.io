@@ -71,12 +71,12 @@ Compojure will allow you to build out robust routes for your API server with all
 This library allows us to manage some lifecycles that you will want in your application. The one you will want to use is when the application boots up, you want to create an HTTP server and when the HTTP server is created, you want to create a connection to our database. 
 
 ### [PostgreSQL](https://www.postgresql.org/), [JDBC Connection](https://github.com/seancorfield/next-jdbc), & [Honey SQL](https://github.com/seancorfield/honeysql)
-For this project you will be using PostgreSQL. Follow the link above to get it install on your machine. 
+For this project you will be using PostgreSQL. Follow the link in the header to get it installed on your machine. 
 
 Honey SQL helps you to generate SQL queries without having to handroll all your queries into strings. It is a fantastic DSL. It will also make your code more readable.
 
 
-To set dependencies you will need to open the `project.clj` file and you will see a key called `:dependencies`. This data structure is where you will add any dependencies you will need for your project.
+To add dependencies you will need to open the `project.clj` file and you will see a key called `:dependencies`. This data structure is where you will add any dependencies you will need for your project.
 ```
 File: project.clj
 
