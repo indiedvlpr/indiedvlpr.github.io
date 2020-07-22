@@ -62,7 +62,7 @@ Now that you have your application, let's install the dependencies you will need
 There are several dependencies you will need to set up your API server for success. Below is a quick blurb for each and then instructions on where these dependencies go in your project.  
 
 ### [Ring - HTTP Server](https://github.com/ring-clojure/ring)
-A wildly used HTTP server library  is Ring. It is a library with all the standard features you will need to get an HTTP server up and running. 
+A wildly used HTTP server library is Ring. It is a library with all the standard features you will need to get an HTTP server up and running. 
 
 ### [Compojure - Routing](https://github.com/weavejester/compojure)
 Compojure will allow you to build out robust routes for your API server with all the standard RESTful methods like `POST`, `GET`, `PUT`, `PATCH`, and `DELETE`. 
@@ -73,7 +73,7 @@ This library allows us to manage some lifecycles that you will want in your appl
 ### [PostgreSQL](https://www.postgresql.org/), [JDBC Connection](https://github.com/seancorfield/next-jdbc), & [Honey SQL](https://github.com/seancorfield/honeysql)
 For this project you will be using PostgreSQL. Follow the link above to get it install on your machine. 
 
-Honey SQL helps you to generate SQL queries without having to handroll all your queries into strings. It is a fantastic DSL. It will also make our code more readable.
+Honey SQL helps you to generate SQL queries without having to handroll all your queries into strings. It is a fantastic DSL. It will also make your code more readable.
 
 
 To set dependencies you will need to open the `project.clj` file and you will see a key called `:dependencies`. This data structure is where you will add any dependencies you will need for your project.
