@@ -18,6 +18,8 @@ I finally understood how to get an API server up and running but I also understo
 
 So here we are. I am going to, hopefully, give all new Clojure peeps a resource that will help them get an API server up and running with a database. 
 
+---
+
 You will be using: Clojure (duh!), Leiningen, Compojure, Ring, Component, and HoneySQL. Don't worry if you do not know what all these things do, you will be by the end of this blog post. 
 
 This is part of a three-part series on creating an API server with routes and database interactivity. 
@@ -91,13 +93,13 @@ File: project.clj
                   [com.stuartsierra/component "0.4.0"]])
 ```
 
-The first step you will need to complete is creating a component for the HTTP server. 
+Next, you will create a component that will be in charge of starting and stopping the server. 
 
 ## Spin up a Server
 
-Create a new directory called `system`. The path should be `src/your-app/system`. Within this directory create a new file called `server.clj`. In this file you will create the HTTP server component. 
+Create a new directory called `system`. The path to this newly created directory should be `src/your-app/system`. Within this directory create a new file called `server.clj`. In this file, you will create the HTTP server component. 
 
-Create a namespace for this Clojure file and you will need to import two additional namespaces from the dependencies you installed earlier. Those will be the jetty adapter that is bundled with Ring and the component namespace. Your namespace should look something like this
+Create a [namespace](https://clojure.org/reference/namespaces) for this Clojure file. You will need to import two additional namespaces from the dependencies you installed earlier. Those will be the jetty adapter that is bundled with Ring and the component namespace. Your namespace should look something like this
 ```
 File: system.clj
 
@@ -191,7 +193,6 @@ Yahoo!
 Stay tuned. In the next part of this series, you will hook up your HTTP server with some routes. 
 
 There is a [GitHub repository](https://github.com/indiedvlpr/clojure-web-api-skeleton) that has this in a skeleton ready to go. 
-
 
 
 Always remember: Be kind. Be compassionate. Be positive. 
